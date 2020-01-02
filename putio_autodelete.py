@@ -2,6 +2,7 @@ import datetime
 import time
 import putiopy
 
+
 def auto_delete(oauth_token, max_age, excluded_dirs=[]):
     client = putiopy.Client(oauth_token)
     
