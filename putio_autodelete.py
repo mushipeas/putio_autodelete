@@ -5,10 +5,10 @@ import putiopy
 EXCLUDED_DIRS = [ 'TV Shows - Muj', 'Movies - Muj', 'TV Shows - Krish', 'Movies - Krish' ]
 
 
-def auto_delete(OAUTH_TOKEN, MAX_AGE, EXCLUDED_DIRS=[]):
-    client = putiopy.Client(OAUTH_TOKEN)
+def auto_delete(oauth_token, max_age, excluded_dirs=[]):
+    client = putiopy.Client(oauth_token)
     
-    max_age_delta = datetime.timedelta(days=MAX_AGE)
+    max_age_delta = datetime.timedelta(days=max_age)
     cutoff_date = datetime.datetime.today() - max_age_delta
 
     files = client.File.list(parent_id=-1, file_type="FILE,AUDIO,VIDEO,IMAGE,ARCHIVE,PDF,TEXT,SWF")
@@ -26,7 +26,7 @@ def auto_delete(OAUTH_TOKEN, MAX_AGE, EXCLUDED_DIRS=[]):
     folders = client.File.list(parent_id=-1, file_type="FOLDER")
     old_folders = [folder for folder in folders if folder.created_at < cutoff_date
                                                 and folder.size == 0
-                                                and folder.name not in EXCLUDED_DIRS]
+                                                and folder.name not in excluded_dirs]
 
     for folder in old_folders:
         try:
@@ -43,23 +43,7 @@ def auto_delete(OAUTH_TOKEN, MAX_AGE, EXCLUDED_DIRS=[]):
         return False
 
 
-def parse_config(config_file):
-    config = configparser.ConfigParser()
-    config.read(config_file)
-
-    cfg = config["DEFAULTS"]
-
-    oa_token = str(cfg["OAUTH_TOKEN"]) if "OAUTH_TOKEN" in cfg else None
-    max_age = float(cfg["MAX_AGE"]) if "MAX_AGE" in cfg else None
-    exc_dirs = list(json.loads(cfg["EXCLUDED_DIRS"])) if "EXCLUDED_DIRS" in cfg else None
-
-    return oa_token, max_age, exc_dirs
-
-if __name__ == "__main__":
-    import argparse
-    import configparser
-    import json
-
+def parse_args():
     parser = argparse.ArgumentParser(
         prog="Putio Auto-Delete",
         description="""
@@ -97,7 +81,28 @@ if __name__ == "__main__":
             """,
         type=str)
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def parse_config(config_file):
+    config = configparser.ConfigParser()
+    config.read(config_file)
+
+    cfg = config["DEFAULTS"]
+
+    oa_token = str(cfg["OAUTH_TOKEN"]) if "OAUTH_TOKEN" in cfg else None
+    max_age = float(cfg["MAX_AGE"]) if "MAX_AGE" in cfg else None
+    exc_dirs = list(json.loads(cfg["EXCLUDED_DIRS"])) if "EXCLUDED_DIRS" in cfg else None
+
+    return oa_token, max_age, exc_dirs
+
+
+if __name__ == "__main__":
+    import argparse
+    import configparser
+    import json
+
+    args = parse_args()
 
     if args.CONFIG:
         try:
