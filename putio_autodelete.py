@@ -37,6 +37,11 @@ def auto_delete(OAUTH_TOKEN, MAX_AGE, EXCLUDED_DIRS=[]):
             print("      Folder Deleted: {}".format(folder.name))
         time.sleep(0.2)
 
+    if old_files or old_folders:
+        return True
+    else:
+        return False
+
 
 def parse_config(config_file):
     config = configparser.ConfigParser()
@@ -105,13 +110,13 @@ if __name__ == "__main__":
     try:
         oa_token = args.OAUTH_TOKEN or oa_token_cfg
     except NameError:
-        print("OATH Token must be provided. See --help or README.")
+        raise Exception("OATH Token must be provided. See --help or README.")
     else:
         max_age =  max_age_cfg or args.MAX_AGE
         exc_dirs = exc_dirs_cfg or []
-        
-    print(oa_token, max_age, exc_dirs)
 
-    # print("Started!")
-    # auto_delete(args.OAUTH_TOKEN,args.MAX_AGE)
-    print("Done!")
+        print("Started!")
+        print("Maximum age: {:.1f} days".format(max_age))
+        if not auto_delete(oa_token, max_age, exc_dirs):
+            print("No files found")
+        print("Done!")
