@@ -10,15 +10,15 @@ def auto_delete(oauth_token, max_age, excluded_dirs=[]):
     cutoff_date = datetime.datetime.today() - max_age_delta
 
     files = client.File.list(parent_id=-1, file_type="FILE,AUDIO,VIDEO,IMAGE,ARCHIVE,PDF,TEXT,SWF")
-    old_files = [_file for _file in files if _file.created_at < cutoff_date]
+    old_files = [file_ for file_ in files if file_.created_at < cutoff_date]
 
-    for _file in old_files:
+    for file_ in old_files:
         try:
-            _file.delete(True)
+            file_.delete(True)
         except:
-            print("[x] Could not delete: {}".format(_file.name))
+            print("[x] Could not delete: {}".format(file_.name))
         else:
-            print("        File Deleted: {}".format(_file.name))
+            print("        File Deleted: {}".format(file_.name))
         time.sleep(0.2)
 
     folders = client.File.list(parent_id=-1, file_type="FOLDER")
