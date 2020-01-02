@@ -2,9 +2,6 @@ import datetime
 import time
 import putiopy
 
-EXCLUDED_DIRS = [ 'TV Shows - Muj', 'Movies - Muj', 'TV Shows - Krish', 'Movies - Krish' ]
-
-
 def auto_delete(oauth_token, max_age, excluded_dirs=[]):
     client = putiopy.Client(oauth_token)
     
