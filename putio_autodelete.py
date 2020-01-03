@@ -3,7 +3,7 @@ import time
 import putiopy
 
 
-def auto_delete(oauth_token, max_age, excluded_dirs=[]):
+def auto_delete(oauth_token, max_age, dryrun, excluded_dirs=[]):
     client = putiopy.Client(oauth_token)
 
     max_age_delta = datetime.timedelta(days=max_age)
@@ -15,13 +15,16 @@ def auto_delete(oauth_token, max_age, excluded_dirs=[]):
     old_files = [file_ for file_ in files if file_.created_at < cutoff_date]
 
     for file_ in old_files:
-        try:
-            file_.delete(True)
-        except:
-            print("[x] Could not delete: {}".format(file_.name))
+        if dryrun:
+            print("      Old file Found: {}".format(file_.name))
         else:
-            print("        File Deleted: {}".format(file_.name))
-        time.sleep(0.2)
+            try:
+                file_.delete(True)
+            except:
+                print("[x] Could not delete: {}".format(file_.name))
+            else:
+                print("        File Deleted: {}".format(file_.name))
+            time.sleep(0.2)
 
     folders = client.File.list(parent_id=-1, file_type="FOLDER")
     old_folders = [
@@ -33,13 +36,16 @@ def auto_delete(oauth_token, max_age, excluded_dirs=[]):
     ]
 
     for folder in old_folders:
-        try:
-            folder.delete(True)
-        except:
-            print("[x] Could not delete: {}".format(folder.name))
+        if dryrun:
+            print("    Old folder Found: {}".format(file_.name))
         else:
-            print("      Folder Deleted: {}".format(folder.name))
-        time.sleep(0.2)
+            try:
+                folder.delete(True)
+            except:
+                print("[x] Could not delete: {}".format(folder.name))
+            else:
+                print("      Folder Deleted: {}".format(folder.name))
+            time.sleep(0.2)
 
     if old_files or old_folders:
         return True
@@ -91,6 +97,14 @@ def parse_args():
         type=str,
     )
 
+    parser.add_argument(
+        "-d",
+        "--dryrun",
+        help="Shows files to delete but does not delete anything.",
+        type=bool,
+        default=False,
+    )
+
     return parser.parse_args()
 
 
@@ -133,7 +147,8 @@ if __name__ == "__main__":
         exc_dirs = exc_dirs_cfg or []
 
         print("Started!")
+        if args.dryrun: print("Dryrun...")
         print("Maximum age: {:.1f} days".format(max_age))
-        if not auto_delete(oa_token, max_age, exc_dirs):
+        if not auto_delete(oa_token, max_age, args.dryrun, exc_dirs):
             print("No files found")
         print("Done!")

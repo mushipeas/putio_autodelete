@@ -5,6 +5,8 @@ The script automatically deletes all files older than X days from your Put.io ac
 Directory exclusion is possible, which prevents certain directories (but not their contents!) from
 being deleted.
 
+The dryrun function will show files that meet the deletion criteria, but will not perform any actions.
+
 Requires OAUTH key to be used as an argument or placed in an optional config file.
 
 Written for and tested on Python 3.7.5
@@ -31,6 +33,7 @@ This should create a virtual environment
 
 ### Running the script:
     usage: putio_autodelete.py [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG]
+                               [-d DRYRUN]
 
     The script automatically deletes all files & dirs older than X days from your
     Put.io account. Folders with the names in the excluded-directories argument
@@ -52,6 +55,8 @@ This should create a virtual environment
                             Config file containing running parameters. This can be
                             used instead of any other args. i.e "config.ini" or
                             "/home/config.ini" See README for details.
+    -d DRYRUN, --dryrun DRYRUN
+                            Shows files to delete but does not delete anything.
 
 ### Config.ini:
 The program can be run with a config file, as:
