@@ -147,7 +147,8 @@ if __name__ == "__main__":
         exc_dirs = exc_dirs_cfg or []
 
         print("Started!")
-        if args.dryrun: print("Dryrun...")
+        if args.dryrun:
+            print("Dryrun...")
         print("Maximum age: {:.1f} days".format(max_age))
         if not auto_delete(oa_token, max_age, args.dryrun, exc_dirs):
             print("No files found")
