@@ -30,7 +30,7 @@ This should create a virtual environment
 ## Useage
 
 ### Running the script:
-    usage: Putio Auto-Delete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG]
+    usage: putio_autodelete.py [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG]
 
     The script automatically deletes all files & dirs older than X days from your
     Put.io account. Folders with the names in the excluded-directories argument
@@ -40,15 +40,15 @@ This should create a virtual environment
 
     optional arguments:
     -h, --help            show this help message and exit
-    -o OAUTH_TOKEN, --OAUTH_TOKEN OAUTH_TOKEN
+    -o OAUTH_TOKEN, --oauth_token OAUTH_TOKEN
                             String representing your OAUTH token, resembling:
                             WARNING: This arg will take priority over the config
                             file. XXXXXXXXXXXXXXXXXXXXX
-    -m MAX_AGE, --MAX_AGE MAX_AGE
+    -m MAX_AGE, --max_age MAX_AGE
                             Maximum age in days for files/folders to keep.
                             WARNING: Config file settings take priority.
                             Default=7.0
-    -c CONFIG, --CONFIG CONFIG
+    -c CONFIG, --config CONFIG
                             Config file containing running parameters. This can be
                             used instead of any other args. i.e "config.ini" or
                             "/home/config.ini" See README for details.
