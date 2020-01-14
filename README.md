@@ -37,36 +37,34 @@ Optionally, to test out, you can install `after` creating and activating an envi
 ## Useage
 
 ### Running the script:
-    usage: putio_autodelete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG]
-                            [-d DRYRUN]
+    usage: putio_autodelete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG] [-d]
 
-    The script automatically deletes all files & dirs older than X days from your
-    Put.io account. Folders with the names in the excluded-directories argument
-    will not be deleted, but their contents will be (if they match the age
-    criteria). The OAUTH Token must be present, either as a direct argument or in
-    the config file.
+        The script automatically deletes all files & dirs older than X days from your
+        Put.io account. Folders with the names in EXCLUDED_DIRS in the config file
+        will not be deleted, but their contents will be (if they match the age
+        criteria). The OAUTH Token must be present, either as a direct argument or in
+        the config file.
 
-    optional arguments:
-    -h, --help            show this help message and exit
-    -o OAUTH_TOKEN, --oauth_token OAUTH_TOKEN
-                            String representing your OAUTH token, resembling:
-                            WARNING: This arg will take priority over the config
-                            file. XXXXXXXXXXXXXXXXXXXXX
-    -m MAX_AGE, --max_age MAX_AGE
-                            Maximum age in days for files/folders to keep.
-                            WARNING: Config file settings take priority.
-                            Default=7.0
-    -c CONFIG, --config CONFIG
-                            Config file containing running parameters. This can be
-                            used instead of any other args. i.e "config.ini" or
-                            "/home/config.ini" See README for details.
-    -d DRYRUN, --dryrun DRYRUN
-                            Shows files to delete but does not delete anything.
+        optional arguments:
+        -h, --help              show this help message and exit
+        -o OAUTH_TOKEN, --oauth_token OAUTH_TOKEN
+                                String representing your OAUTH token, resembling:
+                                WARNING: This arg will take priority over the config
+                                file. XXXXXXXXXXXXXXXXXXXXX
+        -m MAX_AGE, --max_age MAX_AGE
+                                Maximum age in days for files/folders to keep.
+                                WARNING: Config file settings take priority.
+                                Default=7.0
+        -c CONFIG, --config CONFIG
+                                Config file containing running parameters. This can be
+                                used instead of any other args. i.e "config.ini" or
+                                "/home/config.ini" See README for details.
+        -d, --dryrun            Shows files to delete but does not delete anything.
 
 ### Config.ini:
 The program can be run with a config file, as:
 
-    > putio_autodelete -c config.ini
+    putio_autodelete -c config.ini
 
 The config file should contain the OAUTH Token as a minimum (though this can be separately input in the command line).
 The real benefit is being able to include `EXCLUDED_DIRS` which are folders that will not be deleted.
