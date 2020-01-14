@@ -1,4 +1,7 @@
+import argparse
+import configparser
 import datetime
+import json
 import time
 import putiopy
 
@@ -37,7 +40,7 @@ def auto_delete(oauth_token, max_age, dryrun, excluded_dirs=[]):
 
     for folder in old_folders:
         if dryrun:
-            print("    Old folder Found: {}".format(file_.name))
+            print("    Old folder Found: {}".format(folder.name))
         else:
             try:
                 folder.delete(True)
@@ -55,7 +58,7 @@ def auto_delete(oauth_token, max_age, dryrun, excluded_dirs=[]):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        prog="putio_autodelete.py",
+        prog="putio_autodelete",
         description="""
             The script automatically deletes all files & dirs older than X days
             from your Put.io account. Folders with the names in the 
@@ -123,11 +126,7 @@ def parse_config(config_file):
     return oa_token, max_age, exc_dirs
 
 
-if __name__ == "__main__":
-    import argparse
-    import configparser
-    import json
-
+def main():
     args = parse_args()
 
     if args.config:
@@ -153,3 +152,7 @@ if __name__ == "__main__":
         if not auto_delete(oa_token, max_age, args.dryrun, exc_dirs):
             print("No files found")
         print("Done!")
+
+
+if __name__ == "__main__":
+    main()

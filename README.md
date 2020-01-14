@@ -14,26 +14,31 @@ Written for and tested on Python 3.7.5
 ## To Initialise the Project
 
 ### Recommended:
-In the root dir of project, run:
+In the root dir of project (where `setup.py` resides), run:
+
+    pip install .
+
+This will install the script into your system.
+
+Optionally, to test out, you can install `after` creating and activating an environment:
 
     python -m venv .venv
-This should create a virtual environment
 
 ### Activate the environment:
     .\.venv\Scripts\activate (Windows)
     source .venv/bin/activate (UNIX)
 
 ### Install required packages:
-    pip install -r requirements.txt
+    pip install .
 
-### Install development packages (dev only):
-    pip install -r requirements.dev.txt
+### Alternative install for development (dev only):
+    pip install -e .
 
 ## Useage
 
 ### Running the script:
-    usage: putio_autodelete.py [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG]
-                               [-d DRYRUN]
+    usage: putio_autodelete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG]
+                            [-d DRYRUN]
 
     The script automatically deletes all files & dirs older than X days from your
     Put.io account. Folders with the names in the excluded-directories argument
@@ -61,7 +66,7 @@ This should create a virtual environment
 ### Config.ini:
 The program can be run with a config file, as:
 
-    > py putio_autodelete.py -c config.ini
+    > putio_autodelete -c config.ini
 
 The config file should contain the OAUTH Token as a minimum (though this can be separately input in the command line).
 The real benefit is being able to include `EXCLUDED_DIRS` which are folders that will not be deleted.
@@ -76,6 +81,6 @@ Sample `config.ini`:
 
 ### Automation:
 
-It is recommended that you set up a `config.ini` file and use `putio_autodelete.py -c config.ini` to run the script
+It is recommended that you set up a `config.ini` file and use `putio_autodelete -c config.ini` to run the script
 in any automation, especially if directory exclusions are important to you.
 Directory exclusions cannot be set up without the config file.
