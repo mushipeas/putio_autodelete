@@ -61,8 +61,8 @@ def parse_args():
         prog="putio_autodelete",
         description="""
             The script automatically deletes all files & dirs older than X days
-            from your Put.io account. Folders with the names in the 
-            excluded-directories argument will not be deleted, but their contents
+            from your Put.io account. Folders with the names in EXCLUDED_DIRS
+            in the config file will not be deleted, but their contents
             will be (if they match the age criteria).
             The OAUTH Token must be present, either as a direct argument or in
             the config file.
@@ -104,8 +104,7 @@ def parse_args():
         "-d",
         "--dryrun",
         help="Shows files to delete but does not delete anything.",
-        type=bool,
-        default=False,
+        action='store_true',
     )
 
     return parser.parse_args()
