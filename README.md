@@ -82,3 +82,14 @@ Sample `config.ini`:
 It is recommended that you set up a `config.ini` file and use `putio_autodelete -c config.ini` to run the script
 in any automation, especially if directory exclusions are important to you.
 Directory exclusions cannot be set up without the config file.
+
+### Usage as part of another program:
+
+Once installed, it can be imported into a project with:
+
+    import putio_autodelete
+
+The main function `auto_delete` can be run from the module. It is defined as follows:
+
+    def auto_delete(oauth_token: str, max_age: "num", dryrun: bool, excluded_dirs: list=[])
+       Deletes files older than max_age days from the putio account associated with the oauth_token. The folders (NOT their contents) in excluded_dirs will be left even if they match the age criteria. Returns True if files have been found/deleted matching the age criteria. False if no files were found.

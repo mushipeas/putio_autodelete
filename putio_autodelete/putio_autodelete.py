@@ -6,7 +6,16 @@ import time
 import putiopy
 
 
-def auto_delete(oauth_token, max_age, dryrun, excluded_dirs=[]):
+def auto_delete(
+    oauth_token: str, max_age: "num", dryrun: bool, excluded_dirs: list = []
+):
+    """Deletes files older than `max_age` days from the putio account associated with
+    the `oauth_token`. The folders (NOT their contents) in `excluded_dirs` will be
+    left even if they match the age criteria.
+    Returns True if files have been found/deleted matching the age criteria.
+    False if no files were found.
+    """
+
     client = putiopy.Client(oauth_token)
 
     max_age_delta = datetime.timedelta(days=max_age)
@@ -104,7 +113,7 @@ def parse_args():
         "-d",
         "--dryrun",
         help="Shows files to delete but does not delete anything.",
-        action='store_true',
+        action="store_true",
     )
 
     return parser.parse_args()
