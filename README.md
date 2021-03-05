@@ -83,6 +83,20 @@ It is recommended that you set up a `config.ini` file and use `putio_autodelete 
 in any automation, especially if directory exclusions are important to you.
 Directory exclusions cannot be set up without the config file.
 
+### Docker
+
+Build the container:
+
+    docker build --tag putio-autodelete .
+
+Run the script standalone:
+
+    docker run --rm putio-autodelete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG] [-d]
+
+(or) run the script with a config file:
+
+    docker run -v /ABSOLUTE/PATH/TO/config.ini:/app/config.ini --rm putio-autodelete -c /app/config.ini [-d]
+
 ### Usage as part of another program:
 
 Once installed, it can be imported into a project with:
