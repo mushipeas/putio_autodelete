@@ -97,6 +97,10 @@ Run the script standalone:
 
     docker run -v /ABSOLUTE/PATH/TO/config.ini:/app/config.ini --rm putio-autodelete -c /app/config.ini [-d]
 
+Alternatively you can place the config file in the putio_autodelete subfolder before running `docker build`, and remove the need to mount the file at run-time with `-v`:
+
+    docker run --rm putio-autodelete -c /app/config.ini [-d]
+
 ### Usage as part of another program:
 
 Once installed, it can be imported into a project with:
