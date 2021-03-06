@@ -91,7 +91,7 @@ Build the container:
 
 Run the script standalone:
 
-    docker run --rm putio-autodelete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-c CONFIG] [-d]
+    docker run --rm putio-autodelete [-h] [-o OAUTH_TOKEN] [-m MAX_AGE] [-d]
 
 (or) run the script with a config file:
 
